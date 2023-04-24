@@ -20,6 +20,7 @@ steps:
     terraform init
     terraform plan -out=terraform.tfplan
   displayName: 'Terraform Plan'
+  workingDirectory: 'deployments/terraform'
   
 - task: PublishBuildArtifacts@1
   inputs:
