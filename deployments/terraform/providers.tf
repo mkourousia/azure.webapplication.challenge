@@ -6,6 +6,12 @@ terraform {
       version = ">=3.0.0"
     }
   }
+  backend "azurerm" {
+    resource_group_name  = "terraform-shared"
+    storage_account_name = "mkoutfsharedsa"
+    container_name       = "tfstates"
+    key                  = "skedda-chellenge.terraform.tfstate"
+  }
 }
 
 

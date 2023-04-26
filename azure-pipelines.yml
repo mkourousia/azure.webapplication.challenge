@@ -20,6 +20,8 @@ steps:
     terraform init
     terraform plan -out=terraform.tfplan
   displayName: 'Terraform Plan'
+  env:
+    ARM_ACCESS_KEY: $(STORAGEACCOUNTKEY)
   workingDirectory: 'deployments/terraform'
   
 - task: PublishBuildArtifacts@1

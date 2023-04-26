@@ -24,10 +24,10 @@ variable "azure_mssql_username" {
   type = string
 }
 
-variable "azure_mssql_password" {
-  type      = string
-  sensitive = true
-}
+# variable "azure_mssql_password" {
+#   type      = string
+#   sensitive = true
+# }
 
 variable "azuread_administrator" {
   type = object({

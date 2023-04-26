@@ -4,7 +4,7 @@ resource "azurerm_mssql_server" "skedda_challenge_mssql_server" {
   resource_group_name          = azurerm_resource_group.skedda_challenge_resource_group.name
   version                      = var.azure_mssql_version
   administrator_login          = var.azure_mssql_username
-  administrator_login_password = var.azure_mssql_password
+  administrator_login_password = resource.random_password.mssql_password
   tags                         = var.tags
 
   azuread_administrator {
@@ -26,4 +26,10 @@ resource "azurerm_mssql_database" "skedda_challenge_mssql_db" {
     app    = "aspnetcoreapp"
     region = var.location
   }
+}
+
+resource "random_password" "mssql_password" {
+  length           = 16
+  special          = true
+  override_special = "!#$%&*()-_=+[]{}<>:?"
 }
