@@ -5,7 +5,7 @@ variable "prefix" {
 
 variable "location" {
   type    = string
-  default = "eastus2"
+  default = "westeurope"
 }
 
 variable "tags" {
@@ -13,6 +13,10 @@ variable "tags" {
     region = string
     app    = string
   })
+  default = {
+    app    = "skedda-challenge"
+    region = "westeurope"
+  }
 }
 
 variable "azure_mssql_version" {
@@ -21,13 +25,9 @@ variable "azure_mssql_version" {
 }
 
 variable "azure_mssql_username" {
-  type = string
+  type    = string
+  default = "maria"
 }
-
-# variable "azure_mssql_password" {
-#   type      = string
-#   sensitive = true
-# }
 
 variable "azuread_administrator" {
   type = object({
@@ -35,6 +35,11 @@ variable "azuread_administrator" {
     object_id                   = string
     azuread_authentication_only = bool
   })
+  default = {
+    azuread_authentication_only = false
+    login_username              = "mkourousia"
+    object_id                   = "c12cdb8f-6801-4639-96b8-4c6fb3afe3f9"
+  }
 }
 
 variable "azure_mssql_license_type" {
@@ -43,5 +48,6 @@ variable "azure_mssql_license_type" {
 }
 
 variable "azure_mssql_size" {
-  type = number
+  type    = number
+  default = 2
 }
