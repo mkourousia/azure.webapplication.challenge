@@ -15,7 +15,7 @@ variables:
   tfbackendkey: 'skedda-chellenge.terraform.tfstate'
 
 stages:
-  - stage: tfalidate
+  - stage: tfvalidate
     jobs:
       - job: validate
         continueOnError: false
