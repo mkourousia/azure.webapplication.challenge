@@ -54,6 +54,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'init'
+              backendServiceArm: 'AzureConnection'
               backendAzureRmResourceGroupName: '${tfbackendrg}'
               backendAzureRmStorageAccountName: '${tfbackendsa}'
               backendAzureRmContainerName: '${tfbackendcontainer}'
