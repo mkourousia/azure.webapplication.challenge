@@ -53,14 +53,14 @@ stages:
             displayName: init
             env:
               ARM_ACCESS_KEY: $(STORAGEACCOUNTKEY)
-              # ARM_CLIENT_ID="242fe934-0122-4b1e-9bd6-2d46533774a1"
-              # ARM_TENANT_ID=b514d0ef-f17c-4989-93cd-b11010f1130f
-              # ARM_SUBSCRIPTION_ID=88c7e449-6ac7-4e8e-838d-5702a085812c
-              # ARM_CLIENT_SECRET=$(SPSECRET)
+              ARM_CLIENT_ID: 242fe934-0122-4b1e-9bd6-2d46533774a1
+              ARM_TENANT_ID: b514d0ef-f17c-4989-93cd-b11010f1130f
+              ARM_SUBSCRIPTION_ID: 88c7e449-6ac7-4e8e-838d-5702a085812c
+              ARM_CLIENT_SECRET: $(SPSECRET)
             inputs:
               provider: 'azurerm'
               command: 'init'
-              backendServiceArm: 'AzureConnection'
+              # backendServiceArm: 'AzureConnection'
               backendAzureRmResourceGroupName: '${tfbackendrg}'
               backendAzureRmStorageAccountName: '${tfbackendsa}'
               backendAzureRmContainerName: '${tfbackendcontainer}'
