@@ -8,24 +8,64 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
+variables:
+  tfbackendrg: 'terraform-shared'
+  tfbackendsa: 'mkoutfsharedsa'
+  tfbackendcontainer: 'tfstates'
+  tfbackendkey: 'skedda-chellenge.terraform.tfstate'
 
-- task: TerraformInstaller@0
-  displayName: "Install Terraform"
-  inputs:
-    terraformVersion: '1.3.9'
-    terraformDownloadLocation: 'https://releases.hashicorp.com/terraform'
+stages:
+  - stage: 'Terraform Validate'
+    jobs:
+      - job: validate
+        continueOnError: false
+        steps:
+        - task: TerraformInstaller@1
+          displayName: tfinstall
+          inputs:
+            terraformVersion: 'latest'
+        - task: TerraformTaskV4@4
+          displayName: init
+          inputs:
+            provider: 'azurerm'
+            command: 'init'
+            backendAzureRmResourceGroupName: '${tfbackendrg}'
+            backendAzureRmStorageAccountName: '${tfbackendsa}'
+            backendAzureRmContainerName: '${tfbackendcontainer}'
+            backendAzureRmKey: '${tfbackendkey}'
+        - task: TerraformTaskV4@4
+          displayName: validate
+          inputs:
+            provider: 'azurerm'
+            command: 'validate'
 
-- script: |
-    terraform init
-    terraform plan -out=terraform.tfplan
-  displayName: 'Terraform Plan'
-  env:
-    ARM_ACCESS_KEY: $(STORAGEACCOUNTKEY)
-  workingDirectory: 'deployments/terraform/'
-  
-- task: PublishBuildArtifacts@1
-  inputs:
-    pathtoPublish: '$(Build.SourcesDirectory)/terraform.tfplan'
-    artifactName: 'terraformPlan'
-    publishLocation: 'Container'
+  - stage: tfdeploy
+    condition: succeeded('tfvalidate')
+    dependsOn: tfvalidate
+    jobs:
+      - job: apply
+        steps:
+          - task: TerraformInstaller@1
+            displayName: tfinstall
+            inputs:
+              terraformVersion: 'latest'
+          - task: TerraformTaskV4@4
+            displayName: init
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              backendAzureRmResourceGroupName: '${tfbackendrg}'
+              backendAzureRmStorageAccountName: '${tfbackendsa}'
+              backendAzureRmContainerName: '${tfbackendcontainer}'
+              backendAzureRmKey: '${tfbackendkey}'
+          - task: TerraformTaskV4@4
+            displayName: plan
+            inputs:
+              provider: 'azurerm'
+              command: 'plan'
+          - task: TerraformTaskV4@4
+            displayName: apply
+            inputs:
+              provider: 'azurerm'
+              command: 'apply'
+
