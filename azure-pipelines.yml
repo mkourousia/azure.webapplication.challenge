@@ -41,6 +41,8 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'validate'
+            workingDirectory: 'deployments/terraform/'
+            environmentServiceNameAzureRM: 'AzureRMConnection'
 
   - stage: tfdeploy
     condition: succeeded('tfvalidate')
