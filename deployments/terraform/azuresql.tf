@@ -54,8 +54,8 @@ resource "azurerm_mssql_server" "skedda_challenge_mssql_server_secondary" {
 }
 
 
-resource "azurerm_mssql_failover_group" "example" {
-  name      = "example"
+resource "azurerm_mssql_failover_group" "skedda_challenge_failover_group" {
+  name      = "${var.prefix}-failover-group"
   server_id = azurerm_mssql_server.skedda_challenge_mssql_server.id
   databases = [
     azurerm_mssql_database.skedda_challenge_mssql_db.id
