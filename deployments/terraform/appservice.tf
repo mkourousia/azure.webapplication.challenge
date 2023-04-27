@@ -30,7 +30,12 @@ resource "azurerm_linux_web_app" "skedda_challenge_web_app" {
   connection_string {
     name  = "Database"
     type  = "SQLServer"
-    value = "Server=tcp:skedda-challenge-mssql-server.database.windows.net;User ID=${var.azure_mssql_username}};Password=${random_password.mssql_password.result};Trusted_Connection=False;Encrypt=True;"
+    value = "Server=tcp:skedda-challenge-mssql-server.database.windows.net;User ID=${var.azure_mssql_username};Password=${random_password.mssql_password.result};Trusted_Connection=False;Encrypt=True;"
+  }
+
+  app_settings = {
+    "DbConnectionString" = "Server=tcp:skedda-challenge-mssql-server.database.windows.net;User ID=${var.azure_mssql_username};Password=${random_password.mssql_password.result};Trusted_Connection=False;Encrypt=True;",
+    "DetailedErrors" = true
   }
 
   tags = var.tags
