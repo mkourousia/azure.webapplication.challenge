@@ -64,16 +64,17 @@ stages:
               backendAzureRmStorageAccountName: '$(tfbackendsa)'
               backendAzureRmContainerName: '$(tfbackendcontainer)'
               backendAzureRmKey: '$(tfbackendkey)'
+              workingDirectory: 'deployments/terraform/'
           - task: TerraformTaskV4@4
             displayName: plan
             inputs:
               provider: 'azurerm'
               command: 'plan'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/deployments/terraform'
+              workingDirectory: 'deployments/terraform'
           - task: TerraformTaskV4@4
             displayName: apply
             inputs:
               provider: 'azurerm'
               command: 'apply'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/deployments/terraform'
+              workingDirectory: 'deployments/terraform/'
 
