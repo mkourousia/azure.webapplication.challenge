@@ -30,10 +30,10 @@ stages:
             provider: 'azurerm'
             command: 'init'
             backendServiceArm: 'AzureRMConnection'
-            backendAzureRmResourceGroupName: '${tfbackendrg}'
-            backendAzureRmStorageAccountName: '${tfbackendsa}'
-            backendAzureRmContainerName: '${tfbackendcontainer}'
-            backendAzureRmKey: '${tfbackendkey}'
+            backendAzureRmResourceGroupName: '$(tfbackendrg)'
+            backendAzureRmStorageAccountName: '$(tfbackendsa)'
+            backendAzureRmContainerName: '$(tfbackendcontainer)'
+            backendAzureRmKey: '$(tfbackendkey)'
             workingDirectory: '$(System.DefaultWorkingDirectory)/deployments/terraform'
             
         - task: TerraformTaskV4@4
@@ -60,10 +60,10 @@ stages:
               provider: 'azurerm'
               command: 'init'
               backendServiceArm: 'AzureRMConnection'
-              backendAzureRmResourceGroupName: '${tfbackendrg}'
-              backendAzureRmStorageAccountName: '${tfbackendsa}'
-              backendAzureRmContainerName: '${tfbackendcontainer}'
-              backendAzureRmKey: '${tfbackendkey}'
+              backendAzureRmResourceGroupName: '$(tfbackendrg)'
+              backendAzureRmStorageAccountName: '$(tfbackendsa)'
+              backendAzureRmContainerName: '$(tfbackendcontainer)'
+              backendAzureRmKey: '$(tfbackendkey)'
           - task: TerraformTaskV4@4
             displayName: plan
             inputs:
