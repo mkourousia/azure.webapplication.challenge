@@ -4,7 +4,7 @@ resource "azurerm_mssql_server" "skedda_challenge_mssql_server" {
   resource_group_name          = azurerm_resource_group.skedda_challenge_resource_group.name
   version                      = var.azure_mssql_version
   administrator_login          = var.azure_mssql_username
-  administrator_login_password = resource.random_password.mssql_password.result
+  administrator_login_password = random_password.mssql_password.result
   tags                         = var.tags
 
   azuread_administrator {
@@ -32,4 +32,43 @@ resource "random_password" "mssql_password" {
   length           = 16
   special          = true
   override_special = "!#$%&*()-_=+[]{}<>:?"
+}
+
+### FAILOVER MSSQL SERVER ###
+
+resource "azurerm_mssql_server" "skedda_challenge_mssql_server_secondary" {
+  name                         = "${var.prefix}-mssql-server-secondary"
+  location                     = var.secondary_location
+  resource_group_name          = azurerm_resource_group.skedda_challenge_resource_group.name
+  version                      = var.azure_mssql_version
+  administrator_login          = var.azure_mssql_username
+  administrator_login_password = random_password.mssql_password.result
+
+  tags = var.tags
+
+  azuread_administrator {
+    login_username              = var.azuread_administrator["login_username"]
+    object_id                   = var.azuread_administrator["object_id"]
+    azuread_authentication_only = var.azuread_administrator["azuread_authentication_only"]
+  }
+}
+
+
+resource "azurerm_mssql_failover_group" "example" {
+  name      = "example"
+  server_id = azurerm_mssql_server.skedda_challenge_mssql_server.id
+  databases = [
+    azurerm_mssql_database.skedda_challenge_mssql_db.id
+  ]
+
+  partner_server {
+    id = azurerm_mssql_server.skedda_challenge_mssql_server_secondary.id
+  }
+
+  read_write_endpoint_failover_policy {
+    mode          = "Automatic"
+    grace_minutes = 80
+  }
+
+  tags = var.tags
 }

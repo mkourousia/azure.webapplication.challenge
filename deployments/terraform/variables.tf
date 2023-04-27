@@ -51,3 +51,8 @@ variable "azure_mssql_size" {
   type    = number
   default = 2
 }
+
+variable "secondary_location" {
+  type    = string
+  default = "northeurope"
+}
