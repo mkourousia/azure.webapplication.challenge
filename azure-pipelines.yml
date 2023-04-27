@@ -72,11 +72,14 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'plan'
+              environmentServiceNameAzureRM: 'AzureRMConnection'
               workingDirectory: 'deployments/terraform'
           - task: TerraformTaskV4@4
             displayName: apply
             inputs:
               provider: 'azurerm'
               command: 'apply'
+              environmentServiceNameAzureRM: 'AzureRMConnection'
               workingDirectory: 'deployments/terraform/'
+          
 
