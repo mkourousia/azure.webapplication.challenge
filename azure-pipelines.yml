@@ -64,7 +64,6 @@ stages:
               backendAzureRmStorageAccountName: '${tfbackendsa}'
               backendAzureRmContainerName: '${tfbackendcontainer}'
               backendAzureRmKey: '${tfbackendkey}'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/deployments/terraform'
           - task: TerraformTaskV4@4
             displayName: plan
             inputs:
