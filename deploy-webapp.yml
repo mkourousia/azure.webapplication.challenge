@@ -15,5 +15,5 @@ steps:
     azureSubscription: 'AzureRMConnection'
     appType: 'webAppLinux'
     appName: 'skedda-challenge-app-service'
-    package: '$*.zip'
+    package: 'aspnetcoreapp.zip'
     runtimeStack: 'DOTNETCORE|7.0'
