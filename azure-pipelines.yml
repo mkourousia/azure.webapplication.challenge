@@ -96,6 +96,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'plan'
+              commandOptions: '-var location=${{ parameters.location }}'
               environmentServiceNameAzureRM: 'AzureRMConnection'
               workingDirectory: 'deployments/terraform'
           - task: TerraformTaskV4@4
@@ -103,6 +104,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'apply'
+              commandOptions: '-var location=${{ parameters.location }}'
               environmentServiceNameAzureRM: 'AzureRMConnection'
               workingDirectory: 'deployments/terraform/'
           
