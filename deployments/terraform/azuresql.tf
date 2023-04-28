@@ -31,8 +31,8 @@ resource "azurerm_mssql_database" "skedda_challenge_mssql_db" {
 resource "azurerm_mssql_firewall_rule" "example" {
   name             = "AppServiceAllow"
   server_id        = azurerm_mssql_server.skedda_challenge_mssql_server.id
-  start_ip_address = "20.105.224.34"
-  end_ip_address   = "20.105.224.34"
+  start_ip_address = "0.0.0.0"
+  end_ip_address   = "255.255.255.255"
 }
 
 resource "random_password" "mssql_password" {
