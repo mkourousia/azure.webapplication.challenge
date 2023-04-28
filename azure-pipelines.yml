@@ -17,6 +17,7 @@ parameters:
   type: string
   default: westeurope
   values:
+  - westeurope
   - notheurope
   - eastus2
   - centralus
@@ -26,6 +27,7 @@ parameters:
   type: string
   default: westeurope
   values:
+  - westeurope
   - notheurope
   - eastus2
   - centralus
