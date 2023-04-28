@@ -11,6 +11,25 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+parameters:
+- name: azure_location
+  displayName: 'Azure Location'
+  type: string
+  default: westeurope
+  values:
+  - notheurope
+  - eastus2
+  - centralus
+
+- name: azure_location_dr
+  displayName: 'Azure Location DR'
+  type: string
+  default: westeurope
+  values:
+  - notheurope
+  - eastus2
+  - centralus
+
 variables:
   tfbackendrg: 'terraform-shared'
   tfbackendsa: 'mkoutfsharedsa'
