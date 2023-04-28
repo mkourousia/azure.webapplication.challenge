@@ -1,17 +1,26 @@
 name: "Deploy dotnet package"
 
 trigger:
-- main
+- none
 
 pool:
   vmImage: ubuntu-latest
 
+variables:
+  path: 'application/aspnetcoreapp'
+
 steps:
+- script: dotnet build application/aspnetcoreapp/aspnetcoreapp.csproj -c Release
+  displayName: 'dotnetBuild'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: true
 - task: AzureWebApp@1
   displayName: deployWebApp
   inputs:
     azureSubscription: 'AzureRMConnection'
     appType: 'webAppLinux'
     appName: 'skedda-challenge-app-service'
-    package: 'aspnetcoreapp.zip'
+    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
     runtimeStack: 'DOTNETCORE|7.0'
