@@ -6,12 +6,10 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-variables:
-  path: 'application/aspnetcoreapp'
-
 steps:
-- script: dotnet build application/aspnetcoreapp/aspnetcoreapp.csproj -c Release
+- script: dotnet build aspnetcoreapp.csproj -c Release
   displayName: 'dotnetBuild'
+  workingDirectory: 'application/aspnetcoreapp/'
 - task: DotNetCoreCLI@2
   inputs:
     command: 'publish'
