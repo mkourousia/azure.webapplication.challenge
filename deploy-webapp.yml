@@ -14,11 +14,11 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: true
-- task: AzureWebApp@1
-  displayName: deployWebApp
+- task: AzureRmWebAppDeployment@4
   inputs:
+    ConnectionType: 'AzureRM'
     azureSubscription: 'AzureRMConnection'
     appType: 'webAppLinux'
-    appName: 'skedda-challenge-app-service'
-    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
-    runtimeStack: 'DOTNETCORE|7.0'
+    WebAppName: 'skedda-challenge-app-service'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    RuntimeStack: 'DOTNETCORE|7.0'
