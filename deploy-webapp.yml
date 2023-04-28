@@ -10,7 +10,7 @@ parameters:
 - name: AppServiceName
   displayName: 'App Service name'
   type: string
-  default: 'skedda-challenge-app-service'
+  default: skedda-challenge-app-service
 
 steps:
 - script: dotnet build aspnetcoreapp.csproj -c Release
@@ -25,6 +25,6 @@ steps:
     ConnectionType: 'AzureRM'
     azureSubscription: 'AzureRMConnection'
     appType: 'webAppLinux'
-    WebAppName: {{ parameters.AppServiceName }}'
+    WebAppName: '${{ parameters.AppServiceName }}'
     packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
     RuntimeStack: 'DOTNETCORE|7.0'
