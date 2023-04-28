@@ -56,3 +56,8 @@ variable "secondary_location" {
   type    = string
   default = "northeurope"
 }
+
+variable "deploy_dr_appService" {
+  type    = bool
+  default = false
+}

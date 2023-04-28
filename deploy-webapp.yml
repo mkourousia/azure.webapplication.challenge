@@ -6,6 +6,12 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+parameters:
+- name: AppServiceName
+  displayName: 'App Service name'
+  type: string
+  default: 'skedda-challenge-app-service'
+
 steps:
 - script: dotnet build aspnetcoreapp.csproj -c Release
   displayName: 'dotnetBuild'
@@ -19,6 +25,6 @@ steps:
     ConnectionType: 'AzureRM'
     azureSubscription: 'AzureRMConnection'
     appType: 'webAppLinux'
-    WebAppName: 'skedda-challenge-app-service'
+    WebAppName: {{ parameters.AppServiceName }}'
     packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
     RuntimeStack: 'DOTNETCORE|7.0'

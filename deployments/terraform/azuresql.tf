@@ -41,7 +41,14 @@ resource "random_password" "mssql_password" {
   override_special = "!#$%&*()-_=+[]{}<>:?"
 }
 
-### FAILOVER MSSQL SERVER ###
+#################################################################################
+############################# FAILOVER MSSQL SERVER #############################
+#################################################################################
+
+resource "azurerm_resource_group" "skedda_challenge_resource_group_dr" {
+  name     = "${var.prefix}-dr-rg"
+  location = var.secondary_location
+}
 
 resource "azurerm_mssql_server" "skedda_challenge_mssql_server_secondary" {
   name                         = "${var.prefix}-mssql-server-secondary"
