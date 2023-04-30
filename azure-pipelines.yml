@@ -6,7 +6,7 @@ trigger:
       - main
   paths:
     include:
-      - deployments/terraform
+      - infrastructure/terraform
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -58,14 +58,14 @@ stages:
             backendAzureRmStorageAccountName: '$(tfbackendsa)'
             backendAzureRmContainerName: '$(tfbackendcontainer)'
             backendAzureRmKey: '$(tfbackendkey)'
-            workingDirectory: 'deployments/terraform/'
+            workingDirectory: 'infrastructure/terraform/'
             
         - task: TerraformTaskV4@4
           displayName: validate
           inputs:
             provider: 'azurerm'
             command: 'validate'
-            workingDirectory: 'deployments/terraform/'
+            workingDirectory: 'infrastructure/terraform/'
             environmentServiceNameAzureRM: 'AzureRMConnection'
 
   - stage: tfdeploy
@@ -90,7 +90,7 @@ stages:
               backendAzureRmStorageAccountName: '$(tfbackendsa)'
               backendAzureRmContainerName: '$(tfbackendcontainer)'
               backendAzureRmKey: '$(tfbackendkey)'
-              workingDirectory: 'deployments/terraform/'
+              workingDirectory: 'infrastructure/terraform/'
           - task: TerraformTaskV4@4
             displayName: plan
             inputs:
@@ -98,7 +98,7 @@ stages:
               command: 'plan'
               commandOptions: '-var location=${{ parameters.azure_location }}'
               environmentServiceNameAzureRM: 'AzureRMConnection'
-              workingDirectory: 'deployments/terraform'
+              workingDirectory: 'infrastructure/terraform'
           - task: TerraformTaskV4@4
             displayName: apply
             inputs:
@@ -106,6 +106,6 @@ stages:
               command: 'apply'
               commandOptions: '-var location=${{ parameters.azure_location }}'
               environmentServiceNameAzureRM: 'AzureRMConnection'
-              workingDirectory: 'deployments/terraform/'
+              workingDirectory: 'infrastructure/terraform/'
           
 

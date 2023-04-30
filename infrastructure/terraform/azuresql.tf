@@ -28,7 +28,7 @@ resource "azurerm_mssql_database" "skedda_challenge_mssql_db" {
   }
 }
 
-resource "azurerm_mssql_firewall_rule" "example" {
+resource "azurerm_mssql_firewall_rule" "skedda_challenge_mssql_firewall" {
   name             = "AppServiceAllow"
   server_id        = azurerm_mssql_server.skedda_challenge_mssql_server.id
   start_ip_address = "0.0.0.0"
@@ -53,7 +53,7 @@ resource "azurerm_resource_group" "skedda_challenge_resource_group_dr" {
 resource "azurerm_mssql_server" "skedda_challenge_mssql_server_secondary" {
   name                         = "${var.prefix}-mssql-server-secondary"
   location                     = var.secondary_location
-  resource_group_name          = azurerm_resource_group.skedda_challenge_resource_group.name
+  resource_group_name          = azurerm_resource_group.skedda_challenge_resource_group_dr.name
   version                      = var.azure_mssql_version
   administrator_login          = var.azure_mssql_username
   administrator_login_password = random_password.mssql_password.result
@@ -67,6 +67,12 @@ resource "azurerm_mssql_server" "skedda_challenge_mssql_server_secondary" {
   }
 }
 
+resource "azurerm_mssql_firewall_rule" "skedda_challenge_mssql_firewall_secondary" {
+  name             = "AppServiceAllow"
+  server_id        = azurerm_mssql_server.skedda_challenge_mssql_server_secondary.id
+  start_ip_address = "0.0.0.0"
+  end_ip_address   = "255.255.255.255"
+}
 
 resource "azurerm_mssql_failover_group" "skedda_challenge_failover_group" {
   name      = "${var.prefix}-failover-group"
@@ -81,7 +87,7 @@ resource "azurerm_mssql_failover_group" "skedda_challenge_failover_group" {
 
   read_write_endpoint_failover_policy {
     mode          = "Automatic"
-    grace_minutes = 80
+    grace_minutes = 60
   }
 
   tags = var.tags

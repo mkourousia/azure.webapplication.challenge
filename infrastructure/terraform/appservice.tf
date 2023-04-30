@@ -41,6 +41,9 @@ resource "azurerm_linux_web_app" "skedda_challenge_web_app" {
   tags = var.tags
 }
 
+#################################################################################
+############################# FAILOVER MSSQL SERVER #############################
+#################################################################################
 
 resource "azurerm_linux_web_app" "skedda_challenge_web_app_dr" {
   count               = var.deploy_dr_appService ? 1 : 0
