@@ -1,4 +1,4 @@
-name: "Deploy dotnet package"
+name: "Deploy dotnet applcation"
 
 trigger:
 - none

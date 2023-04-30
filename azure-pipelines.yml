@@ -1,4 +1,4 @@
-name: "Terraform Apply"
+name: "Provision webapp resources"
 
 trigger:
   branches:
@@ -96,7 +96,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'plan'
-              commandOptions: '-var location=${{ parameters.azure_location }}'
+              commandOptions: '-var location=${{ parameters.azure_location }} -var secondary_location=${{ parameters.azure_location_dr }}'
               environmentServiceNameAzureRM: 'AzureRMConnection'
               workingDirectory: 'infrastructure/terraform'
           - task: TerraformTaskV4@4
@@ -104,7 +104,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'apply'
-              commandOptions: '-var location=${{ parameters.azure_location }}'
+              commandOptions: '-var location=${{ parameters.azure_location }} -var secondary_location=${{ parameters.azure_location_dr }}'
               environmentServiceNameAzureRM: 'AzureRMConnection'
               workingDirectory: 'infrastructure/terraform/'
           

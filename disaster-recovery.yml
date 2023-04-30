@@ -1,0 +1,95 @@
+name: "Disaster recovery"
+
+trigger: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+- name: azure_location_dr
+  displayName: 'Azure Location DR'
+  type: string
+  default: notheurope
+  values:
+  - westeurope
+  - notheurope
+  - eastus2
+  - centralus
+
+variables:
+  tfbackendrg: 'terraform-shared'
+  tfbackendsa: 'mkoutfsharedsa'
+  tfbackendcontainer: 'tfstates'
+  tfbackendkey: 'skedda-chellenge.terraform.dr.tfstate'
+
+stages:
+  - stage: tfvalidate
+    jobs:
+      - job: validate
+        continueOnError: false
+        steps:
+        - task: TerraformInstaller@1
+          displayName: tfinstall
+          inputs:
+            terraformVersion: 'latest'
+        - task: TerraformTaskV4@4
+          displayName: init
+          inputs:
+            provider: 'azurerm'
+            command: 'init'
+            backendServiceArm: 'AzureRMConnection'
+            backendAzureRmResourceGroupName: '$(tfbackendrg)'
+            backendAzureRmStorageAccountName: '$(tfbackendsa)'
+            backendAzureRmContainerName: '$(tfbackendcontainer)'
+            backendAzureRmKey: '$(tfbackendkey)'
+            workingDirectory: 'infrastructure/dr/'
+            
+        - task: TerraformTaskV4@4
+          displayName: validate
+          inputs:
+            provider: 'azurerm'
+            command: 'validate'
+            workingDirectory: 'infrastructure/dr/'
+            environmentServiceNameAzureRM: 'AzureRMConnection'
+
+  - stage: tfdeploy
+    condition: succeeded('tfvalidate')
+    dependsOn: tfvalidate
+    jobs:
+      - job: apply
+        steps:
+          - task: TerraformInstaller@1
+            displayName: tfinstall
+            inputs:
+              terraformVersion: 'latest'
+          - task: TerraformTaskV4@4
+            displayName: init 
+            env:
+              ARM_ACCESS_KEY: $(STORAGEACCOUNTKEY)
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              backendServiceArm: 'AzureRMConnection'
+              backendAzureRmResourceGroupName: '$(tfbackendrg)'
+              backendAzureRmStorageAccountName: '$(tfbackendsa)'
+              backendAzureRmContainerName: '$(tfbackendcontainer)'
+              backendAzureRmKey: '$(tfbackendkey)'
+              workingDirectory: 'infrastructure/dr/'
+          - task: TerraformTaskV4@4
+            displayName: plan
+            inputs:
+              provider: 'azurerm'
+              command: 'plan'
+              commandOptions: '-var location=${{ parameters.azure_location }}'
+              environmentServiceNameAzureRM: 'AzureRMConnection'
+              workingDirectory: 'infrastructure/dr'
+          - task: TerraformTaskV4@4
+            displayName: apply
+            inputs:
+              provider: 'azurerm'
+              command: 'apply'
+              commandOptions: '-var location=${{ parameters.azure_location }}'
+              environmentServiceNameAzureRM: 'AzureRMConnection'
+              workingDirectory: 'infrastructure/dr/'
+          
+
+# Force db failover (?)

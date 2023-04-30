@@ -13,7 +13,7 @@ resource "azurerm_service_plan" "skedda_challenge_service_plan" {
 }
 
 resource "azurerm_linux_web_app" "skedda_challenge_web_app_dr" {
-  name                = "${var.prefix}-app-service-dr"
+  name                = "${var.prefix}-app-service"
   location            = var.location
   resource_group_name = "skedda-challenge-dr-rg"
   service_plan_id     = azurerm_service_plan.skedda_challenge_service_plan.id
