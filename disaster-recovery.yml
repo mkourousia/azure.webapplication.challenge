@@ -22,6 +22,10 @@ parameters:
     - notheurope
     - eastus2
     - centralus
+  - name: mssql_password
+    displayName: 'Database Admin password'
+    type: string
+
 
 variables:
   tfbackendrg: 'terraform-shared'
@@ -87,7 +91,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'plan'
-              commandOptions: '-var location=${{ parameters.azure_location_dr }}'
+              commandOptions: '-var location=${{ parameters.azure_location_dr }} -var azure_mssql_password=${{ parameters.mssql_password}} -var prefix=skedda-challenge-dr'
               environmentServiceNameAzureRM: 'AzureRMConnection'
               workingDirectory: 'infrastructure/dr'
           - task: TerraformTaskV4@4
@@ -95,7 +99,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'apply'
-              commandOptions: '-var location=${{ parameters.azure_location_dr }} -var prefix=skedda-challenge-dr'
+              commandOptions: '-var location=${{ parameters.azure_location_dr }} -var azure_mssql_password=${{ parameters.mssql_password}} -var prefix=skedda-challenge-dr'
               environmentServiceNameAzureRM: 'AzureRMConnection'
               workingDirectory: 'infrastructure/dr/'
           
