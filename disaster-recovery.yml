@@ -16,10 +16,10 @@ parameters:
   - name: azure_location_dr
     displayName: 'Azure Location DR'
     type: string
-    default: notheurope
+    default: northeurope
     values:
     - westeurope
-    - notheurope
+    - northeurope
     - eastus2
     - centralus
   - name: mssql_password
