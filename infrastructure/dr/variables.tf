@@ -10,15 +10,16 @@ variable "location" {
 
 variable "tags" {
   type = object({
-    app    = string
+    app = string
   })
   default = {
-    app    = "skedda-challenge"
+    app = "skedda-challenge"
   }
 }
 
 variable "azure_mssql_username" {
-  type = string
+  type    = string
+  default = "maria"
 }
 
 variable "azure_mssql_password" {
