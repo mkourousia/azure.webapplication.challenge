@@ -99,16 +99,6 @@ stages:
               environmentServiceNameAzureRM: 'AzureRMConnection'
               workingDirectory: 'infrastructure/dr/'
           
-  # call deploy webapp
-  - stage: deployWebApp
-    condition: succeeded('tfvalidate')
-    dependsOn: tfdeploy
-    jobs:
-    - template: deploy-webapp.yml
-      parameters:
-        AppServiceName: 'skedda-challenge-dr-app-service'
-
-
   # initiate failover for db
   - ${{ if eq(parameters.initiate_db_failover, true) }}:
   - stage: databaseFailover
@@ -122,3 +112,12 @@ stages:
             script: |
               $database = Get-AzSqlDatabase -DatabaseName skedda-challenge-mssql-db -ResourceGroupName skedda-challenge-dr-rg -ServerName skedda-challenge-mssql-server-secondary
               $database | Set-AzSqlDatabaseSecondary -PartnerResourceGroupName skedda-challenge-dr-rg -Failover
+
+   # call deploy webapp
+  # - stage: deployWebApp
+  #   condition: succeeded('tfvalidate')
+  #   dependsOn: tfdeploy
+  #   jobs:
+  #   - template: deploy-webapp.yml
+  #     parameters:
+  #       AppServiceName: 'skedda-challenge-dr-app-service'             
