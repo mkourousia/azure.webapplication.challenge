@@ -1,5 +1,12 @@
 name: "Deploy dotnet applcation"
 
+# pipeline runs when a run of the disaster-recovery pipeline completes
+resources:
+  pipelines:
+  - pipeline: disaster-recovery
+    source: 'Disaster recovery' 
+    trigger: true
+
 trigger:
 - none
 
