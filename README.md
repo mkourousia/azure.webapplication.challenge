@@ -28,20 +28,22 @@ This repo includes all the resources required in Azure to get the aspnetcore app
 
 ### Infrastructure Provisioning
 
-The application's infrastructure consists of an Azure App Service for hosting the application, and Azure SQL server and database which the server connects to. These resources as describes as IaC under `infrastructure/core`. The pipeline used to deploy these resources is `infrastructure-provisioning.yml` and consists of the following stages:
+The application's infrastructure consists of an Azure App Service for hosting the application, and Azure SQL server and database which the server connects to. These resources are describes as IaC under `infrastructure/core`. The pipeline used to deploy these resources is `infrastructure-provisioning.yml` and consists of the following stages:
 
 - Terrafor Validate, where the terraform is initalized and the configuration is validated.
-- Terraform Apply, where after initializing terraform creates a plan and then applies it.
+- Terraform Apply, where after initializing, terraform creates a plan and then it applies it to create the resources on Azure.
 
 
 ### Web App Deployment
 
 Once the infrastructure is ready the pipeline `Deploy Web App`, `deploy-webapp.yml` has to be triggered in order to deploy the application on the server. This includes the following steps:
 
-- Dotnet build
-- An artifact is published in the Azurep pipelines project.
-- The published artifact is pulled and deplluyed on the server.
+- Run `dotnet build` to build the project and create a package.
+- The package is published as an artifact in the Azure pipeline's project.
+- The published artifact is pulled and deplluyed on the App Service.
 
 ### Disaster Recovery
 
-There is a DR proceedure configured for the case of a region failure in the cloud provider. Firstly, the database is configured to automatically start performing a failover to the secondary database grcefully 60 minutes after the primary is lost. Next, the pipeline, `disaster-recovery.yml` has to be triggered to deploy a new App Service in a new region. This pipeline is checking the resources under `infrestructure/dr`. Once the latter is completed successfully the `deploy-webapp.yml` pipeline will be automatically retriggered and deploly the application on the new App Service. Soon after that the application will be back up and running in a new region.
+There is a DR proceedure configured for the case of a region failure in the cloud provider. 
+
+Firstly, the database is configured to automatically start performing a failover to the secondary database grcefully 60 minutes after the primary is lost. Next, the pipeline, `disaster-recovery.yml` has to be triggered to deploy a new App Service in a new region. This pipeline is checking the resources under `infrestructure/dr`. Once the latter is completed successfully the `deploy-webapp.yml` pipeline will be automatically retriggered and deploly the application on the new App Service. Soon after that the application will be back up and running in a new region.
