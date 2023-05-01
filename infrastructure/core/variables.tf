@@ -10,7 +10,6 @@ variable "location" {
 
 variable "tags" {
   type = object({
-    region = string
     app    = string
   })
   default = {
