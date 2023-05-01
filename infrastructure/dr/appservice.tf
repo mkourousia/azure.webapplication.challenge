@@ -3,7 +3,7 @@
 #################################################################################
 
 resource "azurerm_service_plan" "skedda_challenge_service_plan" {
-  name                = "${var.prefix}-appserviceplan-dr"
+  name                = "${var.prefix}-appserviceplan"
   location            = var.location
   resource_group_name = "skedda-challenge-dr-rg"
   os_type             = "Linux"
