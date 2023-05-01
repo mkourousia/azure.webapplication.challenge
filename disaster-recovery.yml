@@ -117,11 +117,4 @@ stages:
                 $database = Get-AzSqlDatabase -DatabaseName skedda-challenge-mssql-db -ResourceGroupName skedda-challenge-dr-rg -ServerName skedda-challenge-mssql-server-secondary
                 $database | Set-AzSqlDatabaseSecondary -PartnerResourceGroupName skedda-challenge-dr-rg -Failover
 
-   # call deploy webapp
-  # - stage: deployWebApp
-  #   condition: succeeded('tfvalidate')
-  #   dependsOn: tfdeploy
-  #   jobs:
-  #   - template: deploy-webapp.yml
-  #     parameters:
-  #       AppServiceName: 'skedda-challenge-dr-app-service'             
+  # The deploy webapp pipeline will be triggered once the current is completed successfully.         
