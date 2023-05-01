@@ -95,7 +95,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'apply'
-              commandOptions: '-var location=${{ parameters.azure_location_dr }}'
+              commandOptions: '-var location=${{ parameters.azure_location_dr }} -var prefix="skedda-challenge-dr"'
               environmentServiceNameAzureRM: 'AzureRMConnection'
               workingDirectory: 'infrastructure/dr/'
           
