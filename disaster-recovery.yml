@@ -1,4 +1,4 @@
-name: "Disaster recovery"
+name: 'Disaster recovery'
 
 trigger: none
 
@@ -113,7 +113,6 @@ stages:
   - ${{ if eq(parameters.initiate_db_failover, true) }}:
   - stage: databaseFailover
     condition: succeeded('tfvalidate')
-    dependsOn: tfdeploy
     jobs:
       - job: failoverDB
         steps:
