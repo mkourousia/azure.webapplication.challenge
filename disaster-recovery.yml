@@ -91,5 +91,14 @@ stages:
               environmentServiceNameAzureRM: 'AzureRMConnection'
               workingDirectory: 'infrastructure/dr/'
           
-
-# Force db failover (?)
+# call deploy webapp
+# - ${{ if eq(parameters.runPerfTests, true) }}:
+#   - stage: databaseFailover
+#     condition: succeeded('tfvalidate')
+#     dependsOn: tfdeploy
+#     jobs:
+#       - job: failoverDB
+#         steps:
+# # Initiate a planned failover
+# $database = Get-AzSqlDatabase -DatabaseName $databasename -ResourceGroupName $secondaryResourceGroupName -ServerName $secondaryServerName
+# $database | Set-AzSqlDatabaseSecondary -PartnerResourceGroupName $primaryResourceGroupName -Failover

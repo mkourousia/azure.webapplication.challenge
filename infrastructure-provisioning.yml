@@ -6,7 +6,7 @@ trigger:
       - main
   paths:
     include:
-      - infrastructure/terraform
+      - infrastructure/core
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -25,7 +25,7 @@ parameters:
 - name: azure_location_dr
   displayName: 'Azure Location DR'
   type: string
-  default: westeurope
+  default: notheurope
   values:
   - westeurope
   - notheurope
@@ -58,14 +58,14 @@ stages:
             backendAzureRmStorageAccountName: '$(tfbackendsa)'
             backendAzureRmContainerName: '$(tfbackendcontainer)'
             backendAzureRmKey: '$(tfbackendkey)'
-            workingDirectory: 'infrastructure/terraform/'
+            workingDirectory: 'infrastructure/core/'
             
         - task: TerraformTaskV4@4
           displayName: validate
           inputs:
             provider: 'azurerm'
             command: 'validate'
-            workingDirectory: 'infrastructure/terraform/'
+            workingDirectory: 'infrastructure/core/'
             environmentServiceNameAzureRM: 'AzureRMConnection'
 
   - stage: tfdeploy
@@ -90,7 +90,7 @@ stages:
               backendAzureRmStorageAccountName: '$(tfbackendsa)'
               backendAzureRmContainerName: '$(tfbackendcontainer)'
               backendAzureRmKey: '$(tfbackendkey)'
-              workingDirectory: 'infrastructure/terraform/'
+              workingDirectory: 'infrastructure/core/'
           - task: TerraformTaskV4@4
             displayName: plan
             inputs:
@@ -98,7 +98,7 @@ stages:
               command: 'plan'
               commandOptions: '-var location=${{ parameters.azure_location }} -var secondary_location=${{ parameters.azure_location_dr }}'
               environmentServiceNameAzureRM: 'AzureRMConnection'
-              workingDirectory: 'infrastructure/terraform'
+              workingDirectory: 'infrastructure/core'
           - task: TerraformTaskV4@4
             displayName: apply
             inputs:
@@ -106,6 +106,6 @@ stages:
               command: 'apply'
               commandOptions: '-var location=${{ parameters.azure_location }} -var secondary_location=${{ parameters.azure_location_dr }}'
               environmentServiceNameAzureRM: 'AzureRMConnection'
-              workingDirectory: 'infrastructure/terraform/'
+              workingDirectory: 'infrastructure/core/'
           
 

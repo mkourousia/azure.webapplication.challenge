@@ -15,7 +15,6 @@ variable "tags" {
   })
   default = {
     app    = "skedda-challenge"
-    region = "northeurope"
   }
 }
 
