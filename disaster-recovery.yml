@@ -106,7 +106,7 @@ stages:
     jobs:
     - template: deploy-webapp.yml
       parameters:
-        AppServiceName: 'skedda-challenge-app-service'
+        AppServiceName: 'skedda-challenge-dr-app-service'
 
 
   # initiate failover for db
