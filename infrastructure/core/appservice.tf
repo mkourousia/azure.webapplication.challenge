@@ -20,7 +20,8 @@ resource "azurerm_linux_web_app" "skedda_challenge_web_app" {
   service_plan_id     = azurerm_service_plan.skedda_challenge_service_plan.id
 
   site_config {
-    always_on = false
+    always_on         = false
+    use_32_bit_worker = true
 
     application_stack {
       dotnet_version = "7.0"
