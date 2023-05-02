@@ -17,7 +17,7 @@ parameters:
 - name: AppServiceName
   displayName: 'App Service name'
   type: string
-  default: skedda-challenge-dr-app-service
+  default: skedda-challenge-mk-dr-app-service
 
 steps:
 - script: dotnet build aspnetcoreapp.csproj -c Release
