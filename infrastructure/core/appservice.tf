@@ -21,7 +21,6 @@ resource "azurerm_linux_web_app" "skedda_challenge_web_app" {
 
   site_config {
     always_on         = false
-    use_32_bit_worker = true
 
     application_stack {
       dotnet_version = "7.0"
