@@ -10,10 +10,10 @@ variable "location" {
 
 variable "tags" {
   type = object({
-    app    = string
+    app = string
   })
   default = {
-    app    = "skedda-challenge"
+    app = "skedda-challenge"
   }
 }
 
@@ -53,9 +53,4 @@ variable "azure_mssql_size" {
 variable "secondary_location" {
   type    = string
   default = "northeurope"
-}
-
-variable "deploy_dr_appService" {
-  type    = bool
-  default = false
 }

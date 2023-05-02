@@ -21,7 +21,6 @@ No modules.
 | Name | Type |
 |------|------|
 | [azurerm_linux_web_app.skedda_challenge_web_app](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_web_app) | resource |
-| [azurerm_linux_web_app.skedda_challenge_web_app_dr](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_web_app) | resource |
 | [azurerm_mssql_database.skedda_challenge_mssql_db](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_database) | resource |
 | [azurerm_mssql_failover_group.skedda_challenge_failover_group](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_failover_group) | resource |
 | [azurerm_mssql_firewall_rule.skedda_challenge_mssql_firewall](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_firewall_rule) | resource |
@@ -42,17 +41,16 @@ No modules.
 | <a name="input_azure_mssql_username"></a> [azure\_mssql\_username](#input\_azure\_mssql\_username) | n/a | `string` | `"maria"` | no |
 | <a name="input_azure_mssql_version"></a> [azure\_mssql\_version](#input\_azure\_mssql\_version) | n/a | `string` | `"12.0"` | no |
 | <a name="input_azuread_administrator"></a> [azuread\_administrator](#input\_azuread\_administrator) | n/a | <pre>object({<br>    login_username              = string<br>    object_id                   = string<br>    azuread_authentication_only = bool<br>  })</pre> | <pre>{<br>  "azuread_authentication_only": false,<br>  "login_username": "mkourousia",<br>  "object_id": "c12cdb8f-6801-4639-96b8-4c6fb3afe3f9"<br>}</pre> | no |
-| <a name="input_deploy_dr_appService"></a> [deploy\_dr\_appService](#input\_deploy\_dr\_appService) | n/a | `bool` | `false` | no |
 | <a name="input_location"></a> [location](#input\_location) | n/a | `string` | `"westeurope"` | no |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | n/a | `string` | `"skedda-challenge"` | no |
 | <a name="input_secondary_location"></a> [secondary\_location](#input\_secondary\_location) | n/a | `string` | `"northeurope"` | no |
-| <a name="input_tags"></a> [tags](#input\_tags) | n/a | <pre>object({<br>    app    = string<br>  })</pre> | <pre>{<br>  "app": "skedda-challenge"<br>}</pre> | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | n/a | <pre>object({<br>    app = string<br>  })</pre> | <pre>{<br>  "app": "skedda-challenge"<br>}</pre> | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_web_app_mssql_database_id"></a> [web\_app\_mssql\_database\_id](#output\_web\_app\_mssql\_database\_id) | n/a |
-| <a name="output_web_app_mssql_server_id"></a> [web\_app\_mssql\_server\_id](#output\_web\_app\_mssql\_server\_id) | n/a |
-| <a name="output_web_app_service_id"></a> [web\_app\_service\_id](#output\_web\_app\_service\_id) | n/a |
+| <a name="output_web_app_mssql_database_id"></a> [web\_app\_mssql\_database\_id](#output\_web\_app\_mssql\_database\_id) | The resource id of the Azure SQL Database that is created |
+| <a name="output_web_app_mssql_server_id"></a> [web\_app\_mssql\_server\_id](#output\_web\_app\_mssql\_server\_id) | The resource id of the Azure SQL Server that is created |
+| <a name="output_web_app_service_id"></a> [web\_app\_service\_id](#output\_web\_app\_service\_id) | The resource id of the Azure App Service that is created |
 <!-- END_TF_DOCS -->

@@ -37,5 +37,5 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_web_app"></a> [web\_app](#output\_web\_app) | n/a |
+| <a name="output_web_app"></a> [web\_app](#output\_web\_app) | The resource id of the Azure App Service that is created |
 <!-- END_TF_DOCS -->
