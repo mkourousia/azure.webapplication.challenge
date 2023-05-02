@@ -20,7 +20,9 @@ No modules.
 | Name | Type |
 |------|------|
 | [azurerm_linux_web_app.skedda_challenge_web_app_dr](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_web_app) | resource |
+| [azurerm_monitor_metric_alert.skedda_challenge_monitor_metric_alert](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_metric_alert) | resource |
 | [azurerm_service_plan.skedda_challenge_service_plan](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/service_plan) | resource |
+| [azurerm_monitor_action_group.general_monitor_action_group](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/monitor_action_group) | data source |
 | [azurerm_mssql_server.secodary_mssql_server](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/mssql_server) | data source |
 
 ## Inputs
