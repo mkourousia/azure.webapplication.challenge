@@ -8,7 +8,7 @@ resource "azurerm_service_plan" "skedda_challenge_service_plan" {
   location            = azurerm_resource_group.skedda_challenge_resource_group.location
   resource_group_name = azurerm_resource_group.skedda_challenge_resource_group.name
   os_type             = "Linux"
-  sku_name            = "S1"
+  sku_name            = "B1"
 
   tags = var.tags
 }
@@ -20,7 +20,7 @@ resource "azurerm_linux_web_app" "skedda_challenge_web_app" {
   service_plan_id     = azurerm_service_plan.skedda_challenge_service_plan.id
 
   site_config {
-    always_on         = false
+    always_on = false
 
     application_stack {
       dotnet_version = "7.0"
