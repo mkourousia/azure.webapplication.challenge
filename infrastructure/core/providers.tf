@@ -8,7 +8,7 @@ terraform {
   }
   backend "azurerm" {
     resource_group_name  = "terraform-shared"
-    storage_account_name = "mkoutfsharedsa"
+    storage_account_name = "mkoutfsharedsa1"
     container_name       = "tfstates"
     key                  = "skedda-chellenge.terraform.tfstate"
   }
