@@ -1,6 +1,6 @@
 variable "prefix" {
   type    = string
-  default = "skedda-challenge-mk"
+  default = "skedda-challenge"
 }
 
 variable "location" {

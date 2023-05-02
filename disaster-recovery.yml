@@ -91,7 +91,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'plan'
-              commandOptions: '-var location=${{ parameters.azure_location_dr }} -var azure_mssql_password=${{ parameters.mssql_password}} -var prefix=skedda-challenge-mk-dr'
+              commandOptions: '-var location=${{ parameters.azure_location_dr }} -var azure_mssql_password=${{ parameters.mssql_password}} -var prefix=skedda-challenge-dr'
               environmentServiceNameAzureRM: 'AzureRMConnection'
               workingDirectory: 'infrastructure/dr'
           - task: TerraformTaskV4@4
@@ -99,7 +99,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'apply'
-              commandOptions: '-var location=${{ parameters.azure_location_dr }} -var azure_mssql_password=${{ parameters.mssql_password}} -var prefix=skedda-challenge-mk-dr'
+              commandOptions: '-var location=${{ parameters.azure_location_dr }} -var azure_mssql_password=${{ parameters.mssql_password}} -var prefix=skedda-challenge-dr'
               environmentServiceNameAzureRM: 'AzureRMConnection'
               workingDirectory: 'infrastructure/dr/'
           
@@ -117,8 +117,8 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
-                $database = Get-AzSqlDatabase -DatabaseName skedda-challenge-mk-mssql-db -ResourceGroupName skedda-challenge-mk-dr-rg -ServerName skedda-challenge-mk-mssql-server-secondary
-                $database | Set-AzSqlDatabaseSecondary -PartnerResourceGroupName skedda-challenge-mk-dr-rg -Failover
+                $database = Get-AzSqlDatabase -DatabaseName skedda-challenge-mssql-db -ResourceGroupName skedda-challenge-dr-rg -ServerName skedda-challenge-mssql-server-secondary
+                $database | Set-AzSqlDatabaseSecondary -PartnerResourceGroupName skedda-challenge-dr-rg -Failover
 
 
 

@@ -7,7 +7,7 @@ resource "azurerm_service_plan" "skedda_challenge_service_plan" {
   location            = var.location
   resource_group_name = "skedda-challenge-dr-rg"
   os_type             = "Linux"
-  sku_name            = "F1"
+  sku_name            = "B1"
 
   tags = var.tags
 }
