@@ -107,14 +107,19 @@ stages:
   - ${{ if eq(parameters.initiate_db_failover, true) }}:
     - stage: databaseFailover
       condition: succeeded('tfvalidate')
+      pool:
+        vmImage: 'windows-latest'
       jobs:
-        - job: failoverDB
-          steps:
+      - job: Build
+        displayName: 'Powershell Script Execute'
+        steps:
           - task: PowerShell@2
             inputs:
               targetType: 'inline'
               script: |
                 $database = Get-AzSqlDatabase -DatabaseName skedda-challenge-mssql-db -ResourceGroupName skedda-challenge-dr-rg -ServerName skedda-challenge-mssql-server-secondary
                 $database | Set-AzSqlDatabaseSecondary -PartnerResourceGroupName skedda-challenge-dr-rg -Failover
+
+
 
   # The deploy webapp pipeline will be triggered once the current is completed successfully.         
