@@ -4,11 +4,11 @@ resource "azurerm_resource_group" "skedda_challenge_resource_group" {
 }
 
 resource "azurerm_service_plan" "skedda_challenge_service_plan" {
-  name                = "${var.prefix}-appserviceplan"
+  name                = "${var.prefix}-serviceplan"
   location            = azurerm_resource_group.skedda_challenge_resource_group.location
   resource_group_name = azurerm_resource_group.skedda_challenge_resource_group.name
   os_type             = "Linux"
-  sku_name            = "B1"
+  sku_name            = "P1v2"
 
   tags = var.tags
 }
