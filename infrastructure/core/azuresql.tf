@@ -38,7 +38,7 @@ resource "azurerm_mssql_firewall_rule" "skedda_challenge_mssql_firewall" {
 resource "random_password" "mssql_password" {
   length           = 16
   special          = true
-  override_special = "!#$%&*()-_=+[]{}<>:?"
+  override_special = "!#$%&*()-_=+[]:?"
 }
 
 #################################################################################
